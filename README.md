@@ -7,6 +7,10 @@ A bot built to send Discord notifications when baby formula becomes available in
 
 I built this bot in the midst of the "great formula shortage" so I could become notified when formula was back in stock so that I could then purchase it for our baby. Now that we have completely stocked up on as much formula as necessary, I am sharing it so others have the opportunity to do the same. As said above, please do not use this for scalping purposes!
 
+## Do I need to modify anything?
+
+Make sure you modify the constants in `main.go` (`BOT_TOKEN` and `CHANNEL_ID`) to match up with your Discord bot. If you need help setting up a Discord bot, I suggest you look at https://www.writebots.com/discord-bot-token/.
+
 ## How do I modify it for other types of formula?
 
 I'll leave figuring out this part up to you, but it is fairly straight forward. Feel free to contribute to the project if you make modifications that you think may help others!
