@@ -23,3 +23,5 @@ I'll leave figuring out this part up to you, but it is fairly straight forward. 
 4. *Modify the constants in main.go and adjust the code as necessary for other types of formula.*
 5. go build .
 6. ./feedthebaby
+
+*Note: I recommend scheduling a cron job/task to run this every minute to ensure it does what it was intended to do.*
