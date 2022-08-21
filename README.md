@@ -14,3 +14,12 @@ Make sure you modify the constants in `main.go` (`BOT_TOKEN` and `CHANNEL_ID`) t
 ## How do I modify it for other types of formula?
 
 I'll leave figuring out this part up to you, but it is fairly straight forward. Feel free to contribute to the project if you make modifications that you think may help others!
+
+## Usage
+
+1. Install Go
+2. git clone https://github.com/un4gi/feedthebaby.git
+3. cd feedthebaby
+4. *Modify the constants in main.go and adjust the code as necessary for other types of formula.*
+5. go build .
+6. ./feedthebaby
