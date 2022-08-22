@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 const (
@@ -47,12 +48,20 @@ func CheckTargetItems() {
 	_ = json.Unmarshal(bodyBytes, &avail)
 
 	if avail.Data.Product.Fulfillment.ShippingOptions.AvailabilityStatus != "OUT_OF_STOCK" {
-		ConnectDiscord(p1.Name + " is available! Buy some at " + p1.Referer + " before it is sold out!" + "(" + avail.Data.Product.Fulfillment.ShippingOptions.AvailabilityStatus + ")")
+		SendDiscordMsg(&SendMsgData{
+			Title:    fmt.Sprintf(p1.Name + " is available! Buy it before it is sold out! " + "(" + avail.Data.Product.Fulfillment.ShippingOptions.AvailabilityStatus + ")"),
+			Url:      p1.Referer,
+			Quantity: fmt.Sprintf("%g", avail.Data.Product.Fulfillment.ShippingOptions.AvailableToPromiseQuantity),
+		})
 	}
 
 	bodyBytes = DoGetRequest(p2.URL, p2.Referer)
 	_ = json.Unmarshal(bodyBytes, &avail)
 	if avail.Data.Product.Fulfillment.ShippingOptions.AvailabilityStatus != "OUT_OF_STOCK" {
-		ConnectDiscord(p2.Name + " is available! Buy some at " + p2.Referer + " before it is sold out!" + "(" + avail.Data.Product.Fulfillment.ShippingOptions.AvailabilityStatus + ")")
+		SendDiscordMsg(&SendMsgData{
+			Title:    fmt.Sprintf(p2.Name + " is available! Buy it before it is sold out! " + "(" + avail.Data.Product.Fulfillment.ShippingOptions.AvailabilityStatus + ")"),
+			Url:      p2.Referer,
+			Quantity: fmt.Sprintf("%g", avail.Data.Product.Fulfillment.ShippingOptions.AvailableToPromiseQuantity),
+		})
 	}
 }
