@@ -1,34 +1,58 @@
 package main
 
 import (
-	"fmt"
+	"context"
+	"log"
+	"strconv"
+	"strings"
+	"time"
 
-	"github.com/bwmarrin/discordgo"
+	"github.com/andersfylling/snowflake"
+	"github.com/incidrthreat/discordhook"
 )
 
-func ConnectDiscord(m string) {
-	d, err := discordgo.New("Bot " + BOT_TOKEN)
-	if err != nil {
-		fmt.Println("Error starting new bot session,", err)
-	}
-
-	user, _ := d.User("@me")
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	err = d.Open()
-	if err != nil {
-		fmt.Println("Error connecting to Discord.")
-	}
-
-	fmt.Println(fmt.Sprint(user), "has connected to Discord!")
-	SendMessage(d, m)
+// struct to define msg data to be sent
+type SendMsgData struct {
+	Title    string
+	Url      string
+	Quantity string
 }
 
-func SendMessage(d *discordgo.Session, m string) {
-	_, err := d.ChannelMessageSend(CHANNEL_ID, m)
+func SendDiscordMsg(s *SendMsgData) {
+	id_token := strings.Replace(DISCORD_WEBHOOK, "https://discord.com/api/webhooks/", "", -1) // removes the prefix to from the URL
+	dataSplit := strings.Split(id_token, "/")                                                 // Splits string into 2 parts, Discord ID and Discord Token
+	discoID_Uint, _ := strconv.ParseUint(dataSplit[0], 10, 64)
+
+	sm, err := discordhook.NewWebhookAPI(snowflake.Snowflake(discoID_Uint), dataSplit[1], true, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
+	t := time.Now()
+
+	// Sends the msg to discord via provided webhooks
+	sm.Execute(context.Background(), &discordhook.WebhookExecuteParams{
+		Embeds: []*discordhook.Embed{
+			{
+				Type:  "rich",
+				Title: s.Title,
+				Color: 13369344, // Target hexcolor code converted to Hex
+				Fields: []*discordhook.EmbedField{
+					{
+						Name:   "URL",
+						Value:  s.Url,
+						Inline: false,
+					},
+					{
+						Name:   "Quantity",
+						Value:  s.Quantity,
+						Inline: false,
+					},
+				},
+				Footer: &discordhook.EmbedFooter{
+					Text: "Product prices and availability are accurate as of the date/time indicated and are subject to change.",
+				},
+				Timestamp: &t,
+			},
+		},
+	}, nil, "")
 }
