@@ -9,7 +9,7 @@ I built this bot in the midst of the "great formula shortage" so I could become 
 
 ## Do I need to modify anything?
 
-Make sure you modify the constants in `main.go` (`BOT_TOKEN` and `CHANNEL_ID`) to match up with your Discord bot. If you need help setting up a Discord bot, I suggest you look at https://www.writebots.com/discord-bot-token/.
+Make sure you modify the constant in `main.go` (`DISCORD_WEBHOOK`) to match up with your Discord webhook integration.  If you need help finding/setting this up see: https://hookdeck.com/webhooks/platforms/how-to-get-started-with-discord-webhooks#what-do-webhooks-do-in-discord
 
 ## How do I modify it for other types of formula?
 
@@ -20,7 +20,7 @@ I'll leave figuring out this part up to you, but it is fairly straight forward. 
 1. Install Go
 2. git clone https://github.com/un4gi/feedthebaby.git
 3. cd feedthebaby
-4. *Modify the constants in main.go and adjust the code as necessary for other types of formula.*
+4. *Modify the DISCORD_WEBHOOK constant in main.go and adjust the code as necessary for other types of formula.*
 5. go build .
 6. ./feedthebaby
 
